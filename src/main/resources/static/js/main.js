@@ -23,7 +23,7 @@ function filtrer() {
 
 function displayFilteredResults(filteredRows, rowsPerPage) {
     document.querySelectorAll('.filter-item').forEach((row) => {
-        row.classList.add('hidden'); 
+        row.classList.add('hidden');
     });
     const totalPages = Math.ceil(filteredRows.length / rowsPerPage);
     const start = 0;

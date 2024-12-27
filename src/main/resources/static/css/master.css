@@ -157,7 +157,7 @@ body {
 }
 
 .form-check-input:checked {
-    background-color: #06bbcc;
+    background-color: #06bbcc; 
     border-color: #06bbcc;
 }
 
@@ -187,4 +187,9 @@ body {
     100% {
         background-position: -200% 0;
     }
+}
+
+
+.hidden {
+    display: none !important;
 }
