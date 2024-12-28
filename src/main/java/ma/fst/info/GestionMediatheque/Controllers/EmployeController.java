@@ -1,13 +1,21 @@
 package ma.fst.info.GestionMediatheque.Controllers;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import ma.fst.info.GestionMediatheque.Service.DocumentService;
+
 @RequestMapping("/RoutesEmploye")
 @Controller
 public class EmployeController {
+    
+    @Autowired
+    DocumentService documentService;
+
+
     @GetMapping("/")
     public String index(Model model) {
         return "index";
@@ -20,8 +28,12 @@ public class EmployeController {
 
     @GetMapping("/documentsE")
     public String gestionDocuments(Model model) {
+        
+        
+        model.addAttribute("documents", documentService.getAllDocuments());
         return "Documents";
     }
+    
 
     @GetMapping("/gestUsager")
     public String gestUsager(Model model) {

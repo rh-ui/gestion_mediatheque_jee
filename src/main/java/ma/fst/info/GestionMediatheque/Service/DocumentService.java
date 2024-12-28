@@ -16,8 +16,18 @@ public class DocumentService {
     @Autowired
     private DocumentRepository documentRepository;
 
-    public void addDocument(Document document) {
+    public void addDocument(String titre, String auteur, Long qtte, Long prix) {
+
+        Document document = new Document();
+        document.setId(0L);
+        document.setDisponible(true);
+        document.setTitre(titre);
+        document.setAuteur(auteur);
+        document.setQtte(qtte);
+        document.setPrix(prix);
+
         documentRepository.save(document);
+
     }
 
     public Document getDocument(Long documentId) {
@@ -29,13 +39,25 @@ public class DocumentService {
         return 0L;
     }
 
-    public void updateDocument(Document document) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'updateDocument'");
+    public void updateDocument(Long id, String titre, String auteur, Long qtte, Long prix) {
+
+        Document document = documentRepository.findById(id).orElseThrow(() -> new RuntimeException("Document not found with id: " + id));
+
+        document.setTitre(titre);
+        document.setAuteur(auteur);
+        document.setQtte(qtte);
+        document.setPrix(prix);
+        documentRepository.save(document);
     }
 
     public List<Document> getAllDocuments() {
         return documentRepository.findAll();
+    }
+
+
+    public void deleteDocument(Long id) {
+        Document document = documentRepository.findById(id).orElseThrow(() -> new RuntimeException("Document not found with id: " + id));
+        documentRepository.delete(document);
     }
 
 }

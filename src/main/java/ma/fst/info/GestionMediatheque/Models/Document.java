@@ -1,5 +1,6 @@
 package ma.fst.info.GestionMediatheque.Models;
 
+import java.sql.Date;
 import java.util.List;
 
 import jakarta.persistence.*;
