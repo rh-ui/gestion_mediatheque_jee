@@ -13,7 +13,7 @@
 
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    
+
     <!-- STYLE CSS -->
     <link rel="stylesheet" href="/css/master.css">
 </head>
@@ -35,10 +35,10 @@
                         <a class="nav-link px-3" href="#">Accueil</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link px-3" href="#">Documents</a>
+                        <a class="nav-link px-3" href="/RoutesEmploye/documentsE">Documents</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link px-3" href="/gestUsager">Usagers</a>
+                        <a class="nav-link px-3" href="/RoutesEmploye/gestUsager">Usagers</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link px-3" href="#">Prêts</a>
@@ -56,7 +56,7 @@
         <div class="card">
             <div class="card-body p-4">
                 <div class="d-flex justify-content-between align-items-center mb-4">
-                    <button id="addDocumentButton" class="btn btn-primary d-flex align-items-center gap-2">
+                    <button id="addDocumentButton" class="btn btn-primary d-flex align-items-center gap-2" data-bs-target="#addDocumentModal" data-bs-toggle="modal">
                         <span class="material-icons">add</span>
                         Ajouter documents
                     </button>
@@ -69,21 +69,33 @@
                                     <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                                 </div>
                                 <div class="modal-body">
-                                    <form>
+                                    <form action="/addDocument" method="post" th:action="@{/addDocument}">
+
+                                        <input type="hidden" name="_csrf" th:value="${_csrf.token}"/>
+
                                         <div class="mb-4">
                                             <label for="documentTitle" class="form-label">Titre</label>
-                                            <input type="text" class="form-control" id="documentTitle"
+                                            <input type="text" class="form-control" name="titre"
                                                 placeholder="Entrez le titre">
                                         </div>
                                         <div class="mb-4">
                                             <label for="documentDescription" class="form-label">Auteur</label>
-                                            <input type="text" class="form-control" id="documentAuteur"
+                                            <input type="text" class="form-control" name="auteur"
                                                 placeholder="Entrez le nom de l'auteur">
+                                        </div>
+                                        <div class="mb-4">
+                                            <label for="documentDescription" class="form-label">Quantité</label>
+                                            <input type="text" class="form-control" name="qtte"
+                                                placeholder="Entrez la quantite du document">
+                                        </div>
+                                        <div class="mb-4">
+                                            <label for="documentDescription" class="form-label">Prix</label>
+                                            <input type="text" class="form-control" name="prix"
+                                                placeholder="Entrez le prix du document">
                                         </div>
                                         <div class="d-flex gap-3 mb-4">
                                             <button type="submit" class="btn btn-primary flex-grow-1">Ajouter</button>
                                         </div>
-
                                     </form>
                                 </div>
                             </div>
@@ -149,44 +161,7 @@
                                             <div class="fw-500">
                                                 Design Pattern in Java
                                             </div>
-                                            
-                                        </div>
-                                    </div>
-                                </td>
-                                <td class="text-center">
-                                    <small class="text-muted">Ajouté le 26 Dec, 2024</small>
-                                </td>
-                                <td>
-                                    <div class="d-flex justify-content-center gap-1">
-                                        <button class="btn btn-action" title="Voir">
-                                            <span class="material-icons">visibility</span>
-                                        </button>
-                                        <button class="btn btn-action" title="Modifier">
-                                            <span class="material-icons">edit</span>
-                                        </button>
-                                        <button class="btn btn-action" title="Supprimer">
-                                            <span class="material-icons">delete</span>
-                                        </button>
-                                        <button class="btn btn-action" title="Télécharger">
-                                            <span class="material-icons">download</span>
-                                        </button>
-                                    </div>
-                                </td>
-                            </tr>
-                            <tr class="filter-item">
-                                <td>
-                                    <div class="form-check">
-                                        <input type="checkbox" class="form-check-input select-item">
-                                    </div>
-                                </td>
-                                <td>
-                                    <div class="d-flex align-items-center">
 
-                                        <div>
-                                            <div class="fw-500">
-                                                Design Pattern in Java
-                                            </div>
-                                            
                                         </div>
                                     </div>
                                 </td>
@@ -210,6 +185,7 @@
                                     </div>
                                 </td>
                             </tr>
+                            
                         </tbody>
                     </table>
                 </div>
@@ -236,7 +212,14 @@
     </div>
 
 
-    
+    <script>
+        const myModal = document.getElementById('addDocumentModal')
+        const myInput = document.getElementById('addDocumentModal')
+
+        myModal.addEventListener('shown.bs.modal', () => {
+            myInput.focus()
+        })
+    </script>
     <script type="text/javascript" src="/js/main.js"></script>
     <script type="text/javascript" src="/js/script.js"></script>
 

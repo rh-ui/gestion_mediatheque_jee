@@ -42,7 +42,7 @@ function setupFilteredPagination(filteredRows, rowsPerPage, totalPages) {
     for (let i = 1; i <= totalPages; i++) {
         const button = document.createElement('button');
         button.textContent = i;
-        button.className = 'bg-gray-200 px-3 py-1 rounded hover:bg-gray-300';
+        button.className = 'page-item active';
         button.addEventListener('click', () => {
             const start = (i - 1) * rowsPerPage;
             const end = start + rowsPerPage;

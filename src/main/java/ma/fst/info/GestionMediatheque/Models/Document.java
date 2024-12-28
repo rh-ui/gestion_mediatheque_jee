@@ -6,7 +6,7 @@ import jakarta.persistence.*;
 import lombok.*;
 
 @Data
-@AllArgsConstructor
+@NoArgsConstructor
 @Entity
 public class Document {
     @Id
@@ -15,6 +15,8 @@ public class Document {
     private String titre;
     private String auteur;
     private boolean disponible;
+    private Long qtte;
+    private Long prix;
 
     @OneToMany(mappedBy = "document")
     private List<Prets> prets;

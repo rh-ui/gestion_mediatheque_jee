@@ -6,9 +6,11 @@ import jakarta.persistence.*;
 import lombok.*;
 
 @Data
+@NoArgsConstructor
 @AllArgsConstructor
 @Entity
 public class Prets {
+    
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -23,6 +25,5 @@ public class Prets {
     private Employe employe;
 
     private LocalDate dateEmprunt;
-    private LocalDate dateRetourPrevue;
-    private LocalDate dateRetourEffective;
+    private LocalDate dateRetour;
 }
