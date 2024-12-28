@@ -17,13 +17,14 @@ public class EmployeService {
 
     @Autowired
     private EmployeRepository employeRepository;
-    
+
     @Autowired
     private PretService pretService;
 
     public void emprunterDocument(Long userId, Long documentId, Long employeId) {
 
-        // il reste le test de la disponibilité du document et le test de l'existence de l'usager et de l'employé
+        // il reste le test de la disponibilité du document et le test de l'existence de
+        // l'usager et de l'employé
 
         UsagerService us = new UsagerService();
         DocumentService doc = new DocumentService();
@@ -42,26 +43,30 @@ public class EmployeService {
 
         Document document = doc.getDocument(documentId);
         Long qtte = document.getQtte();
-        if(qtte > 1) {
+        if (qtte > 1) {
             document.setQtte(qtte - 1);
         } else {
             document.setDisponible(false);
         }
-        doc.updateDocument(document);
+        doc.updateDocument(document.getId(), document.getTitre(), document.getAuteur(), document.getQtte(),
+                document.getPrix());
 
     }
-
 
     public void returnDocument(Long pretId) {
 
         // il reste le test de l'existence du pret
+
         Prets pret = pretService.getPretById(pretId);
         Document document = pret.getDocument();
-        Long qtte = document.getQtte();
-        document.setQtte(qtte + 1);
+
+        document.setQtte(document.getQtte() + 1);
         document.setDisponible(true);
+
         DocumentService doc = new DocumentService();
-        doc.updateDocument(document);
+        
+        doc.updateDocument(document.getId(), document.getTitre(), document.getAuteur(), document.getQtte(),
+                document.getPrix());
         pretService.deletePret(pretId);
 
     }
@@ -69,6 +74,5 @@ public class EmployeService {
     private Employe getEmploye(Long employeId) {
         return employeRepository.findById(employeId).get();
     }
-
 
 }

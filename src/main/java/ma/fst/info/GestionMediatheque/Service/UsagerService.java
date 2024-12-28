@@ -17,7 +17,13 @@ public class UsagerService {
     private UsagerRepository usagerRepository;
 
 
-    public void addUsager(Usager usager) {
+    public void addUsager(String nomUsager, String prenomUsager, String emailUsager) {
+
+        Usager usager = new Usager();
+        usager.setNom(nomUsager);
+        usager.setPrenom(prenomUsager);
+        usager.setEmail(emailUsager);
+
         usagerRepository.save(usager);
     }
 
@@ -34,7 +40,20 @@ public class UsagerService {
     }
 
     public Usager getUsager(Long userId) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'getUsager'");
+        
+        return usagerRepository.findById(userId).get();
+    }
+
+    public List<Usager> getAllUsagers(){
+        return usagerRepository.findAll();
+    }
+
+    public void updateUsager(Long id, String nomUsager, String prenomUsager, String emailUsager) {
+        
+        Usager usager = usagerRepository.findById(id).get();
+        usager.setNom(nomUsager);
+        usager.setPrenom(prenomUsager);
+        usager.setEmail(emailUsager);
+        usagerRepository.save(usager);
     }
 }

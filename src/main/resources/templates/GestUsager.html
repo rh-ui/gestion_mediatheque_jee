@@ -36,10 +36,10 @@
                         <a class="nav-link px-3" href="#">Accueil</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link px-3" href="#">Documents</a>
+                        <a class="nav-link px-3" href="/RoutesEmploye/documentsE">Documents</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link px-3" href="#">Usagers</a>
+                        <a class="nav-link px-3" href="/RoutesEmploye/gestUsager">Usagers</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link px-3" href="/gestPrets">Prêts</a>
@@ -57,7 +57,8 @@
         <div class="card">
             <div class="card-body p-4">
                 <div class="d-flex justify-content-between align-items-center mb-4">
-                    <button id="addUsagerButton" class="btn btn-primary d-flex align-items-center ">
+                    <button class="btn btn-primary d-flex align-items-center " data-bs-target="#addUsagerModal"
+                        data-bs-toggle="modal">
                         <span class="material-icons">add</span>
                         Ajouter un usager
                     </button>
@@ -70,24 +71,26 @@
                                     <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                                 </div>
                                 <div class="modal-body">
-                                    <form>
+                                    <form method="post" th:action="@{/GestionUsager/addUsager}">
+                                        <input type="hidden" name="_csrf" th:value="${_csrf.token}" />
+
                                         <div class="mb-4">
                                             <label for="documentDescription" class="form-label">Nom</label>
-                                            <input type="text" class="form-control" id="nomUsager"
+                                            <input type="text" class="form-control" name="nomUsager"
                                                 placeholder="Entrez le nom de l'usager">
                                         </div>
                                         <div class="mb-4">
                                             <label for="documentDescription" class="form-label">Prenom</label>
-                                            <input type="text" class="form-control" id="prenomUsager"
+                                            <input type="text" class="form-control" name="prenomUsager"
                                                 placeholder="Entrez le prenom de l'usager">
                                         </div>
 
                                         <div class="mb-4">
                                             <label for="documentTitle" class="form-label">Email</label>
-                                            <input type="text" class="form-control" id="emailUsager"
+                                            <input type="text" class="form-control" name="emailUsager"
                                                 placeholder="Entrez l'email de l'usager">
                                         </div>
-                                        
+
                                         <div class="d-flex gap-3 mb-4">
                                             <button type="submit" class="btn btn-primary flex-grow-1">Ajouter</button>
                                         </div>
@@ -145,7 +148,7 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <tr class="filter-item">
+                            <tr class="filter-item" th:each="usager : ${usagers}">
                                 <td>
                                     <div class="form-check">
                                         <input type="checkbox" class="form-check-input select-item">
@@ -153,69 +156,111 @@
                                 </td>
                                 <td>
                                     <div class="d-flex align-items-center">
-
                                         <div>
-                                            <div class="fw-500">
-                                                Oumaima Laghjibi
-                                            </div>
-
+                                            <div class="fw-500" th:text="${usager.nom}">Nom Complet</div>
                                         </div>
                                     </div>
                                 </td>
                                 <td class="text-center">
-                                    <small class="text-muted">laghjibi@gmail.com</small>
+                                    <small class="text-muted" th:text="${usager.email}">Email</small>
                                 </td>
                                 <td class="text-center">
-                                    <small class="text-muted">20</small>
+                                    <small class="text-muted" >Nombre de prets</small>
                                 </td>
                                 <td>
                                     <div class="d-flex justify-content-center gap-1">
                                         <button class="btn btn-action" title="Voir">
                                             <span class="material-icons">visibility</span>
                                         </button>
-                                        <button class="btn btn-action" title="Modifier">
+                                        <button class="btn btn-action" title="Modifier"
+                                            th:attr="data-bs-target='#modifyUsagerModal-' + ${usager.id}"
+                                            data-bs-toggle="modal">
                                             <span class="material-icons">edit</span>
                                         </button>
-                                        <button class="btn btn-action" title="Supprimer">
-                                            <span class="material-icons">delete</span>
-                                        </button>
-                                    </div>
-                                </td>
-                            </tr>
-                            <tr class="filter-item">
-                                <td>
-                                    <div class="form-check">
-                                        <input type="checkbox" class="form-check-input select-item">
-                                    </div>
-                                </td>
-                                <td>
-                                    <div class="d-flex align-items-center">
+                                        <!-- Model de modification -->
+                                        <div class="modal fade" th:id="'modifyUsagerModal-' + ${usager.id}"
+                                            tabindex="-1">
+                                            <div class="modal-dialog modal-dialog-centered">
+                                                <div class="modal-content">
+                                                    <div class="modal-header">
+                                                        <h5 class="modal-title text-center">Modifier les informations de <span
+                                                                th:text="${usager.nom}"></span></h5>
+                                                        <button type="button" class="btn-close"
+                                                            data-bs-dismiss="modal"></button>
+                                                    </div>
+                                                    <div class="modal-body">
+                                                        <form  method="post" th:action="@{/GestionUsager/updateUsager}">
 
-                                        <div>
-                                            <div class="fw-500">
-                                                Oumaima Ouchlih
+                                                            <input type="hidden" name="_csrf" th:value="${_csrf.token}" />
+
+                                                            <input type="hidden" name="id" th:value="${usager.id}" />
+
+                                                            <div class="mb-4">
+                                                                <label for="documentTitle"
+                                                                    class="form-label">Nom</label>
+                                                                <input type="text" class="form-control" name="nom"
+                                                                    th:placeholder="${usager.nom}">
+                                                            </div>
+                                                            <div class="mb-4">
+                                                                <label for="documentDescription"
+                                                                    class="form-label">Prénom</label>
+                                                                <input type="text" class="form-control" name="prenom"
+                                                                    th:placeholder="${usager.prenom}">
+                                                            </div>
+                                                            <div class="mb-4">
+                                                                <label for="documentDescription"
+                                                                    class="form-label">Email</label>
+                                                                <input type="text" class="form-control" name="email"
+                                                                    th:placeholder="${usager.email}">
+                                                            </div>
+                                                            <div class="d-flex gap-3 mb-4">
+                                                                <button type="submit"
+                                                                    class="btn btn-primary flex-grow-1">Modifier</button>
+                                                            </div>
+                                                        </form>
+                                                    </div>
+                                                </div>
                                             </div>
-
                                         </div>
-                                    </div>
-                                </td>
-                                <td class="text-center">
-                                    <small class="text-muted">oumima@gmail.com</small>
-                                </td>
-                                <td class="text-center">
-                                    <small class="text-muted">200</small>
-                                </td>
-                                <td>
-                                    <div class="d-flex justify-content-center gap-1">
-                                        <button class="btn btn-action" title="Voir">
-                                            <span class="material-icons">visibility</span>
-                                        </button>
-                                        <button class="btn btn-action" title="Modifier">
-                                            <span class="material-icons">edit</span>
-                                        </button>
-                                        <button class="btn btn-action" title="Supprimer">
+
+
+                                        <button class="btn btn-action" title="Supprimer"
+                                            th:attr="data-bs-target='#deleteUsagerModal-' + ${usager.id}"
+                                            data-bs-toggle="modal">
                                             <span class="material-icons">delete</span>
                                         </button>
+
+                                        <!-- Model de delete -->
+                                        <div class="modal fade" th:id="'deleteUsagerModal-' + ${usager.id}"
+                                            tabindex="-1">
+                                            <div class="modal-dialog modal-dialog-centered">
+                                                <div class="modal-content">
+                                                    <div class="modal-header">
+                                                        <h5 class="modal-title text-center">Suppression</h5>
+                                                        <button type="button" class="btn-close"
+                                                            data-bs-dismiss="modal"></button>
+                                                    </div>
+                                                    <div class="modal-body">
+                                                        <p class="">Etes vous sur de supprimer <span
+                                                                th:text="${usager.nom}"></span></p>
+
+                                                    </div>
+                                                    <div class="modal-footer">
+                                                        <form method="post"
+                                                            th:action="@{/GestionUsager/deleteUsager}">
+                                                            <input type="hidden" name="_csrf"
+                                                                th:value="${_csrf.token}" />
+                                                            <input type="hidden" name="id" th:value="${usager.id}" />
+                                                            <div class="d-flex mb-4 justify-content-end gap-3">
+                                                                <button type="submit"
+                                                                    class="btn btn-danger">Supprimer</button>
+                                                            </div>
+                                                        </form>
+                                                    </div>
+
+                                                </div>
+                                            </div>
+                                        </div>
                                     </div>
                                 </td>
                             </tr>
@@ -246,6 +291,14 @@
 
 
 
+    <script>
+        const myModal = document.getElementById('addUsagerModal')
+        const myInput = document.getElementById('addUsagerModal')
+
+        myModal.addEventListener('shown.bs.modal', () => {
+            myInput.focus()
+        })
+    </script>
 
     <script type="text/javascript" src="/js/main.js"></script>
     <script type="text/javascript" src="/js/script.js"></script>
