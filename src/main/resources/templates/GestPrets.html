@@ -37,13 +37,13 @@
                         <a class="nav-link px-3" href="#">Accueil</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link px-3" href="/documentsE">Documents</a>
+                        <a class="nav-link px-3" href="/RoutesEmploye/documentsE">Documents</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link px-3" href="#">Usagers</a>
+                        <a class="nav-link px-3" href="/RoutesEmploye/gestUsager">Usagers</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link px-3" href="#">Prêts</a>
+                        <a class="nav-link px-3" href="/RoutesEmploye/gestPrets">Prêts</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link px-3" href="#" style="color: #06bbcc;">Déconnexion</a>
@@ -56,6 +56,229 @@
     <div class="container py-5">
         <div class="card">
             <div class="card-body p-4">
+
+                <div class="d-flex justify-content-between align-items-center mb-4">
+                    <button id="addDocumentButton" class="btn btn-primary d-flex align-items-center gap-2"
+                        data-bs-target="#addDocumentModal" data-bs-toggle="modal">
+                        <span class="material-icons">add</span>
+                        Nouveau prêts
+                    </button>
+                    <!-- Add Document Modal -->
+                    <div class="modal fade" id="addDocumentModal" tabindex="-1">
+                        <div class="modal-dialog modal-dialog-centered">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title text-center">Effectuer un nouveau prêt</h5>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                                </div>
+                                <div class="modal-body">
+                                    <form method="post" th:action="@{/GestionPrets/addPret}">
+
+                                        <input type="hidden" name="_csrf" th:value="${_csrf.token}" />
+
+                                        <div class="mb-4">
+                                            <label for="documentTitle" class="form-label">Documents</label>
+                                            <input type="text" class="form-control" name="titre"
+                                                placeholder="Entrez le titre">
+                                        </div>
+                                        <div class="mb-4">
+                                            <label for="documentDescription" class="form-label">Auteur</label>
+                                            <input type="text" class="form-control" name="auteur"
+                                                placeholder="Entrez le nom de l'auteur">
+                                        </div>
+                                        <div class="mb-4">
+                                            <label for="documentDescription" class="form-label">Quantité</label>
+                                            <input type="text" class="form-control" name="qtte"
+                                                placeholder="Entrez la quantite du document">
+                                        </div>
+                                        <div class="mb-4">
+                                            <label for="documentDescription" class="form-label">Prix</label>
+                                            <input type="text" class="form-control" name="prix"
+                                                placeholder="Entrez le prix du document">
+                                        </div>
+                                        <div class="d-flex gap-3 mb-4">
+                                            <button type="submit" class="btn btn-primary flex-grow-1">Ajouter</button>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="d-flex gap-3 align-items-center">
+                        <div class="search-box">
+                            <input id="searchBar" type="text" placeholder="Rechercher..." class="form-control ps-5"
+                                onkeyup="filtrer()"/>
+                            <span class="material-icons position-absolute top-50 start-0 translate-middle-y ms-3">search</span>
+                        </div>
+                        <div class="dropdown">
+                            <button id="filterButton" class="btn btn-light d-flex align-items-center gap-2"
+                                data-bs-toggle="dropdown">
+                                <span class="material-icons">filter_list</span>
+                            </button>
+                            <ul class="dropdown-menu dropdown-menu-end py-2">
+                                <li>
+                                    <h6 class="dropdown-header text-uppercase">Trier par</h6>
+                                </li>
+                                <li><button class="dropdown-item">Date de publication</button></li>
+                                <li><button class="dropdown-item">Titre</button></li>
+                                <li>
+                                    <hr class="dropdown-divider">
+                                </li>
+                                <li>
+                                    <h6 class="dropdown-header text-uppercase">Filtrer par type</h6>
+                                </li>
+                                <li><button class="dropdown-item">Type 1</button></li>
+                                <li><button class="dropdown-item">Type 2</button></li>
+                                <li><button class="dropdown-item">Type 3</button></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="table-responsive">
+                    <table class="table align-middle">
+                        <thead>
+                            <tr>
+                                <th width="5%">
+                                    <div class="form-check">
+                                        <input type="checkbox" id="select-all" class="form-check-input">
+                                    </div>
+                                </th>
+                                <th>Titre du document</th>
+                                <th class="text-center">Usager</th>
+                                <th class="text-center">Date de retour</th>
+                                <th class="text-center">Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr class="filter-item" th:each="document : ${documents}">
+                                <td>
+                                    <div class="form-check">
+                                        <input type="checkbox" class="form-check-input select-item">
+                                    </div>
+                                </td>
+                                <td>
+                                    <div class="d-flex align-items-center">
+                                        <div>
+                                            <div class="fw-500" th:text="${document.titre}">Titre du document</div>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td class="text-center">
+                                    <small class="text-muted" th:text="${document.prix}">Prix</small>
+                                </td>
+                                <td class="text-center">
+                                    <small class="text-muted" th:text="${document.qtte}">Quantité</small>
+                                </td>
+                                <td>
+                                    <div class="d-flex justify-content-center gap-1">
+                                        <button class="btn btn-action" title="Voir">
+                                            <span class="material-icons">visibility</span>
+                                        </button>
+                                        <button class="btn btn-action" title="Modifier"
+                                            th:attr="data-bs-target='#modifyDocumentModal-' + ${document.id}"
+                                            data-bs-toggle="modal">
+                                            <span class="material-icons">edit</span>
+                                        </button>
+                                        <!-- Model de modification -->
+                                        <div class="modal fade" th:id="'modifyDocumentModal-' + ${document.id}"
+                                            tabindex="-1">
+                                            <div class="modal-dialog modal-dialog-centered">
+                                                <div class="modal-content">
+                                                    <div class="modal-header">
+                                                        <h5 class="modal-title text-center">Modifier le document " <span
+                                                                th:text="${document.titre}"></span> "</h5>
+                                                        <button type="button" class="btn-close"
+                                                            data-bs-dismiss="modal"></button>
+                                                    </div>
+                                                    <div class="modal-body">
+                                                        <form action="/GestionDocument/modifyDocument" method="post"
+                                                            th:action="@{/GestionDocument/modifyDocument}">
+
+                                                            <input type="hidden" name="_csrf"
+                                                                th:value="${_csrf.token}" />
+
+                                                            <input type="hidden" name="id" th:value="${document.id}" />
+
+                                                            <div class="mb-4">
+                                                                <label for="documentTitle"
+                                                                    class="form-label">Titre</label>
+                                                                <input type="text" class="form-control" name="titre"
+                                                                    th:placeholder="${document.titre}">
+                                                            </div>
+                                                            <div class="mb-4">
+                                                                <label for="documentDescription"
+                                                                    class="form-label">Auteur</label>
+                                                                <input type="text" class="form-control" name="auteur"
+                                                                    th:placeholder="${document.auteur}">
+                                                            </div>
+                                                            <div class="mb-4">
+                                                                <label for="documentDescription"
+                                                                    class="form-label">Quantité</label>
+                                                                <input type="text" class="form-control" name="qtte"
+                                                                    th:placeholder="${document.qtte}">
+                                                            </div>
+                                                            <div class="mb-4">
+                                                                <label for="documentDescription"
+                                                                    class="form-label">Prix</label>
+                                                                <input type="text" class="form-control" name="prix"
+                                                                    th:placeholder="${document.prix}">
+                                                            </div>
+                                                            <div class="d-flex gap-3 mb-4">
+                                                                <button type="submit"
+                                                                    class="btn btn-primary flex-grow-1">Modifier</button>
+                                                            </div>
+                                                        </form>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+
+                                        <button class="btn btn-action" title="Supprimer"
+                                            th:attr="data-bs-target='#deleteDocumentModal-' + ${document.id}"
+                                            data-bs-toggle="modal">
+                                            <span class="material-icons">delete</span>
+                                        </button>
+
+                                        <!-- Model de delete -->
+                                        <div class="modal fade" th:id="'deleteDocumentModal-' + ${document.id}"
+                                            tabindex="-1">
+                                            <div class="modal-dialog modal-dialog-centered">
+                                                <div class="modal-content">
+                                                    <div class="modal-header">
+                                                        <h5 class="modal-title text-center">Suppression</h5>
+                                                        <button type="button" class="btn-close"
+                                                            data-bs-dismiss="modal"></button>
+                                                    </div>
+                                                    <div class="modal-body">
+                                                        <p class="">Etes vous sur de supprimer <span
+                                                                th:text="${document.titre}"></span></p>
+
+                                                    </div>
+                                                    <div class="modal-footer">
+                                                        <form method="post"
+                                                            th:action="@{/GestionDocument/deleteDocument}">
+                                                            <input type="hidden" name="_csrf"
+                                                                th:value="${_csrf.token}" />
+                                                            <input type="hidden" name="id" th:value="${document.id}" />
+                                                            <div class="d-flex mb-4 justify-content-end gap-3">
+                                                                <button type="submit"
+                                                                    class="btn btn-danger">Supprimer</button>
+                                                            </div>
+                                                        </form>
+                                                    </div>
+
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </td>
+                            </tr>
+
+                        </tbody>
+                    </table>
+                </div>
 
             </div>
         </div>
