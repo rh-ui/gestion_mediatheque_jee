@@ -3,6 +3,9 @@ package ma.fst.info.GestionMediatheque.Service;
 import java.time.LocalDate;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import lombok.*;
@@ -20,6 +23,9 @@ public class EmployeService {
 
     @Autowired
     private PretService pretService;
+
+    @Autowired
+    private PasswordEncoder passwordEncoder;
 
     public void emprunterDocument(Long userId, Long documentId, Long employeId) {
 
@@ -74,5 +80,21 @@ public class EmployeService {
     private Employe getEmploye(Long employeId) {
         return employeRepository.findById(employeId).get();
     }
+
+    public void updateEmploye(Long id, String nom, String prenom, String email, String password,
+                                     Long telephone, String poste) {
+
+        Employe employe = employeRepository.findById(id).orElseThrow(() -> new RuntimeException("Employe not found with id: " + id));
+
+        employe.setNom(nom);
+        employe.setPrenom(prenom);
+        employe.setEmail(email);
+        employe.setTelephone(telephone);
+        employe.setPoste(poste);
+        employe.setPassword(passwordEncoder.encode(employe.getPassword()));
+        employeRepository.save(employe);
+    }
+
+        
 
 }

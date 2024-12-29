@@ -32,7 +32,7 @@
             <div class="collapse navbar-collapse" id="navbarCollapse">
                 <ul class="navbar-nav ms-auto">
                     <li class="nav-item">
-                        <a class="nav-link px-3" href="#">Accueil</a>
+                        <a class="nav-link px-3" href="/RoutesEmploye/profile">Accueil</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link px-3" href="/RoutesEmploye/documentsE">Documents</a>
@@ -41,7 +41,7 @@
                         <a class="nav-link px-3" href="/RoutesEmploye/gestUsager">Usagers</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link px-3" href="#">Prêts</a>
+                        <a class="nav-link px-3" href="/RoutesEmploye/gestPrets">Prêts</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link px-3" href="#" style="color: #06bbcc;">Déconnexion</a>
@@ -73,7 +73,7 @@
                                     <form action="/GestionDocument/addDocument" method="post"
                                         th:action="@{/GestionDocument/addDocument}">
 
-                                        <input type="hidden" name="_csrf" th:value="${_csrf.token}" />
+                                        <!-- <input type="hidden" name="_csrf" th:value="${_csrf.token}" /> -->
 
                                         <div class="mb-4">
                                             <label for="documentTitle" class="form-label">Titre</label>
