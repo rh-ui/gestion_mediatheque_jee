@@ -7,6 +7,7 @@ import lombok.*;
 
 @Data
 @AllArgsConstructor
+@NoArgsConstructor
 @Entity
 public class Employe {
     @Id
@@ -15,6 +16,8 @@ public class Employe {
     private String nom;
     private String prenom;
     private String email;
+    private String password;
+    private Long telephone;
     private String poste;
 
     @OneToMany(mappedBy = "employe")

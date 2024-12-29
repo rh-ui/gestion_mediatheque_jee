@@ -33,7 +33,7 @@
             <div class="collapse navbar-collapse" id="navbarCollapse">
                 <ul class="navbar-nav ms-auto">
                     <li class="nav-item">
-                        <a class="nav-link px-3" href="#">Accueil</a>
+                        <a class="nav-link px-3" href="/RoutesEmploye/profile">Accueil</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link px-3" href="/RoutesEmploye/documentsE">Documents</a>
@@ -72,7 +72,7 @@
                                 </div>
                                 <div class="modal-body">
                                     <form method="post" th:action="@{/GestionUsager/addUsager}">
-                                        <input type="hidden" name="_csrf" th:value="${_csrf.token}" />
+                                        <!-- <input type="hidden" name="_csrf" th:value="${_csrf.token}" /> -->
 
                                         <div class="mb-4">
                                             <label for="documentDescription" class="form-label">Nom</label>
