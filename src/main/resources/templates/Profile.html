@@ -15,6 +15,7 @@
 </head>
 
 <body>
+    
     <nav class="navbar navbar-expand-lg navbar-light bg-white sticky-top">
         <div class="container">
             <a class="navbar-brand d-flex align-items-center" href="#">
@@ -26,21 +27,21 @@
             <div class="collapse navbar-collapse" id="navbarCollapse">
                 <ul class="navbar-nav ms-auto">
                     <li class="nav-item">
-                        <a class="nav-link px-3" href="/RoutesEmploye/profileE">Accueil</a>
+                        <a class="nav-link px-3" th:href="@{/RoutesEmploye/profile}">Accueil</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link px-3" href="/RoutesEmploye/documentsE">Documents</a>
+                        <a class="nav-link px-3" th:href="@{/RoutesEmploye/documentsE}">Documents</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link px-3" href="/RoutesEmploye/gestUsager">Usagers</a>
+                        <a class="nav-link px-3" th:href="@{/RoutesEmploye/gestUsager}">Usagers</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link px-3" href="/RoutesEmploye/gestPrets">Prêts</a>
+                        <a class="nav-link px-3" th:href="@{/RoutesEmploye/gestPrets}">Prêts</a>
                     </li>
                     <li class="nav-item">
-                        <form th:action="@{/logout}" method="post">
-                            <button type="submit" class="nav-link px-3"
-                                style="color: #06bbcc; border: none; background: none;">
+                        <form th:action="@{/logout}" method="post" style="margin: 0; padding: 0;">
+                            <button type="submit" class="nav-link px-3" 
+                                    style="color: #06bbcc; border: none; background: none; cursor: pointer; width: 100%;">
                                 Déconnexion
                             </button>
                         </form>
@@ -49,6 +50,7 @@
             </div>
         </div>
     </nav>
+      
 
     <div class="container py-5">
         <div class="card">

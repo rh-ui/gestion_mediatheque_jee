@@ -21,6 +21,7 @@
 <body>
     <div class="loading-animation"></div>
 
+    
     <nav class="navbar navbar-expand-lg navbar-light bg-white sticky-top">
         <div class="container">
             <a class="navbar-brand d-flex align-items-center" href="#">
@@ -44,12 +45,18 @@
                         <a class="nav-link px-3" href="/RoutesEmploye/gestPrets">Prêts</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link px-3" href="#" style="color: #06bbcc;">Déconnexion</a>
+                        <form th:action="@{/logout}" method="post">
+                            <button type="submit" class="nav-link px-3"
+                                style="color: #06bbcc; border: none; background: none;">
+                                Déconnexion
+                            </button>
+                        </form>
                     </li>
                 </ul>
             </div>
         </div>
     </nav>
+           
 
     <div class="container py-5">
 

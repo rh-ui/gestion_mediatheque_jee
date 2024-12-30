@@ -23,27 +23,13 @@ public class LoginController {
     private PasswordEncoder passwordEncoder;
 
     @GetMapping("/login")
-    public String login() {
-        return "Login"; // this will return the login.html page
+    public String login(@RequestParam(value = "logout", required = false) String logout, 
+                       Model model) {
+        if (logout != null) {
+            model.addAttribute("message", "Vous avez été déconnecté avec succès.");
+        }
+        return "Login";
     }
-
-    // @PostMapping("/loginForm")
-    // public String login(@RequestParam("username") String email,
-    //                     @RequestParam("password") String password,
-    //                     Model model) {
-    //     // Rechercher l'employé par email
-    //     Employe employe = employeRepository.findByEmail(email).orElse(null);
-    //                         // System.out.println("ok");
-    //     if (employe != null && passwordEncoder.matches(password, employe.getPassword())) {
-    //         // Si les informations sont valides, rediriger vers le profil
-    //         model.addAttribute("employeP", employe);
-    //         return "redirect:/RoutesEmploye/profile";
-    //     }
-
-    //     // Sinon, retourner à la page de connexion avec un message d'erreur
-    //     model.addAttribute("error", "Email ou mot de passe invalide.");
-    //     return "Login";
-    // }
 
     @GetMapping("/register")
     public String showRegistrationForm() {

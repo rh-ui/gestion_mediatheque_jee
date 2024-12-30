@@ -57,6 +57,11 @@
 
 <div class="login-container">
     <h2 class="text-center mb-4">Connexion</h2>
+
+    <div th:if="${param.logout}" class="alert alert-success mb-3">
+        Vous avez été déconnecté avec succès.
+    </div>
+    
     <form method="POST" action="/loginForm">
         <div class="mb-3">
             <label for="username" class="form-label">Email</label>
