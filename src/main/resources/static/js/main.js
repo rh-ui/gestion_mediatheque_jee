@@ -132,3 +132,60 @@ document.addEventListener('DOMContentLoaded', () => {
     const rowsPerPage = 5;
     setupDynamicPagination(rows, rowsPerPage);
 });
+// Pour les boutons de téléchargement
+document.querySelectorAll('.download-fiche').forEach(button => {
+    button.addEventListener('click', function() {
+        const userId = this.getAttribute('data-id');
+        if (!userId || userId === 'null') {
+            console.error('ID utilisateur invalide pour le téléchargement');
+            return;
+        }
+        downloadFicheLecture(userId);
+    });
+});
+function downloadFicheLecture(userId) {
+    if (!userId || userId === 'null') {
+        console.error('ID utilisateur invalide pour le téléchargement');
+        return;
+    }
+
+    const loadingAnimation = document.querySelector('.loading-animation');
+    if (loadingAnimation) {
+        loadingAnimation.style.display = 'block';
+    }
+
+    fetch(`/GestionUsager/ficheLecture/${userId}`, {
+        method: 'GET',
+        headers: {
+            'X-CSRF-TOKEN': document.querySelector('meta[name="_csrf"]')?.content
+        },
+        credentials: 'same-origin'
+    })
+    .then(response => {
+        if (!response.ok) {
+            throw new Error('Erreur lors du téléchargement');
+        }
+        return response.blob();
+    })
+    .then(blob => {
+        const url = window.URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = `fiche_lecture_${userId}.pdf`;
+        document.body.appendChild(a);
+        a.click();
+        window.URL.revokeObjectURL(url);
+        document.body.removeChild(a);
+
+        if (loadingAnimation) {
+            loadingAnimation.style.display = 'none';
+        }
+    })
+    .catch(error => {
+        console.error('Erreur:', error);
+        alert('Une erreur est survenue lors du téléchargement de la fiche');
+        if (loadingAnimation) {
+            loadingAnimation.style.display = 'none';
+        }
+    });
+}

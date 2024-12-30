@@ -169,8 +169,8 @@
                                 </td>
                                 <td>
                                     <div class="d-flex justify-content-center gap-1">
-                                        <button class="btn btn-action" title="Voir">
-                                            <span class="material-icons">visibility</span>
+                                        <button class="btn btn-action download-fiche" title="Télécharger la fiche de lecture" th:data-id="${usager.id}" th:title="${usager.id}" >
+                                            <span class="material-icons">download</span>
                                         </button>
                                         <button class="btn btn-action" title="Modifier"
                                             th:attr="data-bs-target='#modifyUsagerModal-' + ${usager.id}"
@@ -183,35 +183,31 @@
                                             <div class="modal-dialog modal-dialog-centered">
                                                 <div class="modal-content">
                                                     <div class="modal-header">
-                                                        <h5 class="modal-title text-center">Modifier les informations de <span
+                                                        <h5 class="modal-title text-center">Modifier les informations d'usager<span
                                                                 th:text="${usager.nom}"></span></h5>
                                                         <button type="button" class="btn-close"
                                                             data-bs-dismiss="modal"></button>
                                                     </div>
                                                     <div class="modal-body">
                                                         <form  method="post" th:action="@{/GestionUsager/updateUsager}">
-
-                                                            <input type="hidden" name="_csrf" th:value="${_csrf.token}" />
-
                                                             <input type="hidden" name="id" th:value="${usager.id}" />
-
                                                             <div class="mb-4">
                                                                 <label for="documentTitle"
                                                                     class="form-label">Nom</label>
                                                                 <input type="text" class="form-control" name="nom"
-                                                                    th:placeholder="${usager.nom}">
+                                                                    th:value="${usager.nom}">
                                                             </div>
                                                             <div class="mb-4">
                                                                 <label for="documentDescription"
                                                                     class="form-label">Prénom</label>
                                                                 <input type="text" class="form-control" name="prenom"
-                                                                    th:placeholder="${usager.prenom}">
+                                                                    th:value="${usager.prenom}">
                                                             </div>
                                                             <div class="mb-4">
                                                                 <label for="documentDescription"
                                                                     class="form-label">Email</label>
                                                                 <input type="text" class="form-control" name="email"
-                                                                    th:placeholder="${usager.email}">
+                                                                    th:value="${usager.email}">
                                                             </div>
                                                             <div class="d-flex gap-3 mb-4">
                                                                 <button type="submit"
@@ -222,8 +218,6 @@
                                                 </div>
                                             </div>
                                         </div>
-
-
                                         <button class="btn btn-action" title="Supprimer"
                                             th:attr="data-bs-target='#deleteUsagerModal-' + ${usager.id}"
                                             data-bs-toggle="modal">
@@ -248,8 +242,6 @@
                                                     <div class="modal-footer">
                                                         <form method="post"
                                                             th:action="@{/GestionUsager/deleteUsager}">
-                                                            <input type="hidden" name="_csrf"
-                                                                th:value="${_csrf.token}" />
                                                             <input type="hidden" name="id" th:value="${usager.id}" />
                                                             <div class="d-flex mb-4 justify-content-end gap-3">
                                                                 <button type="submit"

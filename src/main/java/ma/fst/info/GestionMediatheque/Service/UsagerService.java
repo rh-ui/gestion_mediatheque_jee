@@ -4,7 +4,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
+import java.util.Optional;
 import ma.fst.info.GestionMediatheque.Models.Usager;
 import ma.fst.info.GestionMediatheque.Repository.UsagerRepository;
 import lombok.RequiredArgsConstructor;
@@ -55,5 +55,8 @@ public class UsagerService {
         usager.setPrenom(prenomUsager);
         usager.setEmail(emailUsager);
         usagerRepository.save(usager);
+    }
+    public Optional<Usager> getUsagerById(Long id) {
+        return usagerRepository.findById(id);
     }
 }

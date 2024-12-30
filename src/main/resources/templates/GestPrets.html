@@ -195,8 +195,8 @@
                                                         <form action="/GestionDocument/modifyDocument" method="post"
                                                             th:action="@{/GestionDocument/modifyDocument}">
 
-                                                            <input type="hidden" name="_csrf"
-                                                                th:value="${_csrf.token}" />
+                                                            <!--input type="hidden" name="_csrf"
+                                                                th:value="${_csrf.token}" /-->
 
                                                             <input type="hidden" name="id" th:value="${document.id}" />
 
@@ -259,8 +259,8 @@
                                                     <div class="modal-footer">
                                                         <form method="post"
                                                             th:action="@{/GestionDocument/deleteDocument}">
-                                                            <input type="hidden" name="_csrf"
-                                                                th:value="${_csrf.token}" />
+                                                            <!--input type="hidden" name="_csrf"
+                                                                th:value="${_csrf.token}" /-->
                                                             <input type="hidden" name="id" th:value="${document.id}" />
                                                             <div class="d-flex mb-4 justify-content-end gap-3">
                                                                 <button type="submit"

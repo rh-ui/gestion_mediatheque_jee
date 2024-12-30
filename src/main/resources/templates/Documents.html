@@ -194,10 +194,6 @@
                                                     <div class="modal-body">
                                                         <form action="/GestionDocument/modifyDocument" method="post"
                                                             th:action="@{/GestionDocument/modifyDocument}">
-
-                                                            <input type="hidden" name="_csrf"
-                                                                th:value="${_csrf.token}" />
-
                                                             <input type="hidden" name="id"
                                                                 th:value="${document.id}" />
 
@@ -205,25 +201,25 @@
                                                                 <label for="documentTitle"
                                                                     class="form-label">Titre</label>
                                                                 <input type="text" class="form-control" name="titre"
-                                                                    th:placeholder="${document.titre}">
+                                                                    th:value="${document.titre}">
                                                             </div>
                                                             <div class="mb-4">
                                                                 <label for="documentDescription"
                                                                     class="form-label">Auteur</label>
                                                                 <input type="text" class="form-control" name="auteur"
-                                                                    th:placeholder="${document.auteur}">
+                                                                    th:value="${document.auteur}">
                                                             </div>
                                                             <div class="mb-4">
                                                                 <label for="documentDescription"
                                                                     class="form-label">Quantité</label>
                                                                 <input type="text" class="form-control" name="qtte"
-                                                                    th:placeholder="${document.qtte}">
+                                                                    th:value="${document.qtte}">
                                                             </div>
                                                             <div class="mb-4">
                                                                 <label for="documentDescription"
                                                                     class="form-label">Prix</label>
                                                                 <input type="text" class="form-control" name="prix"
-                                                                    th:placeholder="${document.prix}">
+                                                                    th:value="${document.prix}">
                                                             </div>
                                                             <div class="d-flex gap-3 mb-4">
                                                                 <button type="submit"
@@ -256,7 +252,7 @@
                                                     </div>
                                                     <div class="modal-footer">
                                                         <form method="post" th:action="@{/GestionDocument/deleteDocument}">
-                                                            <input type="hidden" name="_csrf" th:value="${_csrf.token}" />
+                                                            <!--input type="hidden" name="_csrf" th:value="${_csrf.token}" /-->
                                                             <input type="hidden" name="id" th:value="${document.id}" />
                                                             <div class="d-flex mb-4 justify-content-end gap-3">
                                                                 <button type="submit"
