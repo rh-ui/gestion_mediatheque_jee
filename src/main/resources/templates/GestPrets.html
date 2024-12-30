@@ -25,7 +25,7 @@
 
     <nav class="navbar navbar-expand-lg navbar-light bg-white sticky-top">
         <div class="container">
-            <a class="navbar-brand d-flex align-items-center" href="/RoutesEmploye/profileE">
+            <a class="navbar-brand d-flex align-items-center" href="#">
                 <h2 class="mb-0" style="color: #06bbcc; font-weight: 700;">OI Mediatheque</h2>
             </a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
@@ -52,85 +52,58 @@
             </div>
         </div>
     </nav>
-
     <div class="container py-5">
         <div class="card">
             <div class="card-body p-4">
-
                 <div class="d-flex justify-content-between align-items-center mb-4">
-                    <button id="addDocumentButton" class="btn btn-primary d-flex align-items-center gap-2"
-                        data-bs-target="#addDocumentModal" data-bs-toggle="modal">
+                    <button id="addPretButton" class="btn btn-primary d-flex align-items-center gap-2"
+                        data-bs-target="#addPretModal" data-bs-toggle="modal">
                         <span class="material-icons">add</span>
-                        Nouveau prêts
+                        Ajouter prêt
                     </button>
-                    <!-- Add Document Modal -->
-                    <div class="modal fade" id="addDocumentModal" tabindex="-1">
+                    
+                    <!-- Add Pret Modal -->
+                    <div class="modal fade" id="addPretModal" tabindex="-1">
                         <div class="modal-dialog modal-dialog-centered">
                             <div class="modal-content">
                                 <div class="modal-header">
-                                    <h5 class="modal-title text-center">Effectuer un nouveau prêt</h5>
+                                    <h5 class="modal-title">Ajouter un nouveau prêt</h5>
                                     <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                                    
+                                    
                                 </div>
                                 <div class="modal-body">
-                                    <form method="post" th:action="@{/GestionPrets/addPret}">
-
-                                        <input type="hidden" name="_csrf" th:value="${_csrf.token}" />
-
+                                    <form action="/GestionPret/addPret" method="post">
                                         <div class="mb-4">
-                                            <label for="documentTitle" class="form-label">Documents</label>
-                                            <input type="text" class="form-control" name="titre"
-                                                placeholder="Entrez le titre">
-                                        </div>
-                                        <div class="mb-4">
-                                            <label for="documentDescription" class="form-label">Auteur</label>
-                                            <input type="text" class="form-control" name="auteur"
-                                                placeholder="Entrez le nom de l'auteur">
+                                            <label for="documentId" class="form-label">Document</label>
+                                            <select class="form-control" id="documentId" name="documentId" required>
+                                                <option th:each="doc : ${documents}"
+                                                        th:value="${doc.id}"
+                                                        th:text="${doc.titre}">
+                                                </option>
+                                            </select>
                                         </div>
                                         <div class="mb-4">
-                                            <label for="documentDescription" class="form-label">Quantité</label>
-                                            <input type="text" class="form-control" name="qtte"
-                                                placeholder="Entrez la quantite du document">
+                                            <label for="usagerId" class="form-label">Usager</label>
+                                            <select class="form-control" id="usagerId" name="usagerId" required>
+                                                <option th:each="usg : ${usagers}"
+                                                        th:value="${usg.id}"
+                                                        th:text="${usg.nom}">
+                                                </option>
+                                            </select>
                                         </div>
                                         <div class="mb-4">
-                                            <label for="documentDescription" class="form-label">Prix</label>
-                                            <input type="text" class="form-control" name="prix"
-                                                placeholder="Entrez le prix du document">
+                                            <label for="dateEmprunt" class="form-label">Date d'emprunt</label>
+                                            <input type="date" class="form-control" name="dateEmprunt" required>
                                         </div>
-                                        <div class="d-flex gap-3 mb-4">
-                                            <button type="submit" class="btn btn-primary flex-grow-1">Ajouter</button>
+                                        <div class="mb-4">
+                                            <label for="dateRetour" class="form-label">Date de retour</label>
+                                            <input type="date" class="form-control" name="dateRetour" required>
                                         </div>
+                                        <button type="submit" class="btn btn-primary w-100">Ajouter</button>
                                     </form>
-                                </div>
+                                </div>                                
                             </div>
-                        </div>
-                    </div>
-                    <div class="d-flex gap-3 align-items-center">
-                        <div class="search-box">
-                            <input id="searchBar" type="text" placeholder="Rechercher..." class="form-control ps-5"
-                                onkeyup="filtrer()"/>
-                            <span class="material-icons position-absolute top-50 start-0 translate-middle-y ms-3">search</span>
-                        </div>
-                        <div class="dropdown">
-                            <button id="filterButton" class="btn btn-light d-flex align-items-center gap-2"
-                                data-bs-toggle="dropdown">
-                                <span class="material-icons">filter_list</span>
-                            </button>
-                            <ul class="dropdown-menu dropdown-menu-end py-2">
-                                <li>
-                                    <h6 class="dropdown-header text-uppercase">Trier par</h6>
-                                </li>
-                                <li><button class="dropdown-item">Date de publication</button></li>
-                                <li><button class="dropdown-item">Titre</button></li>
-                                <li>
-                                    <hr class="dropdown-divider">
-                                </li>
-                                <li>
-                                    <h6 class="dropdown-header text-uppercase">Filtrer par type</h6>
-                                </li>
-                                <li><button class="dropdown-item">Type 1</button></li>
-                                <li><button class="dropdown-item">Type 2</button></li>
-                                <li><button class="dropdown-item">Type 3</button></li>
-                            </ul>
                         </div>
                     </div>
                 </div>
@@ -139,155 +112,108 @@
                     <table class="table align-middle">
                         <thead>
                             <tr>
-                                <th width="5%">
-                                    <div class="form-check">
-                                        <input type="checkbox" id="select-all" class="form-check-input">
-                                    </div>
-                                </th>
-                                <th>Titre du document</th>
-                                <th class="text-center">Usager</th>
-                                <th class="text-center">Date de retour</th>
+                                <th>Document</th>
+                                <th>Usager</th>
+                                <th>Date d'emprunt</th>
+                                <th>Date de retour</th>
                                 <th class="text-center">Actions</th>
                             </tr>
                         </thead>
                         <tbody>
-                            <tr class="filter-item" th:each="document : ${documents}">
-                                <td>
-                                    <div class="form-check">
-                                        <input type="checkbox" class="form-check-input select-item">
-                                    </div>
-                                </td>
-                                <td>
-                                    <div class="d-flex align-items-center">
-                                        <div>
-                                            <div class="fw-500" th:text="${document.titre}">Titre du document</div>
-                                        </div>
-                                    </div>
-                                </td>
-                                <td class="text-center">
-                                    <small class="text-muted" th:text="${document.prix}">Prix</small>
-                                </td>
-                                <td class="text-center">
-                                    <small class="text-muted" th:text="${document.qtte}">Quantité</small>
-                                </td>
+                            <tr th:each="pret : ${prets}">
+                                <td th:text="${pret.document.titre}"></td>
+                                <td th:text="${pret.usager.nom}"></td>
+                                <td th:text="${pret.dateEmprunt}"></td>
+                                <td th:text="${pret.dateRetour}"></td>
                                 <td>
                                     <div class="d-flex justify-content-center gap-1">
-                                        <button class="btn btn-action" title="Voir">
-                                            <span class="material-icons">visibility</span>
-                                        </button>
                                         <button class="btn btn-action" title="Modifier"
-                                            th:attr="data-bs-target='#modifyDocumentModal-' + ${document.id}"
+                                            th:attr="data-bs-target='#modifyPretModal-' + ${pret.id}"
                                             data-bs-toggle="modal">
                                             <span class="material-icons">edit</span>
                                         </button>
-                                        <!-- Model de modification -->
-                                        <div class="modal fade" th:id="'modifyDocumentModal-' + ${document.id}"
-                                            tabindex="-1">
-                                            <div class="modal-dialog modal-dialog-centered">
-                                                <div class="modal-content">
-                                                    <div class="modal-header">
-                                                        <h5 class="modal-title text-center">Modifier le document " <span
-                                                                th:text="${document.titre}"></span> "</h5>
-                                                        <button type="button" class="btn-close"
-                                                            data-bs-dismiss="modal"></button>
-                                                    </div>
-                                                    <div class="modal-body">
-                                                        <form action="/GestionDocument/modifyDocument" method="post"
-                                                            th:action="@{/GestionDocument/modifyDocument}">
-
-                                                            <!--input type="hidden" name="_csrf"
-                                                                th:value="${_csrf.token}" /-->
-
-                                                            <input type="hidden" name="id" th:value="${document.id}" />
-
-                                                            <div class="mb-4">
-                                                                <label for="documentTitle"
-                                                                    class="form-label">Titre</label>
-                                                                <input type="text" class="form-control" name="titre"
-                                                                    th:placeholder="${document.titre}">
-                                                            </div>
-                                                            <div class="mb-4">
-                                                                <label for="documentDescription"
-                                                                    class="form-label">Auteur</label>
-                                                                <input type="text" class="form-control" name="auteur"
-                                                                    th:placeholder="${document.auteur}">
-                                                            </div>
-                                                            <div class="mb-4">
-                                                                <label for="documentDescription"
-                                                                    class="form-label">Quantité</label>
-                                                                <input type="text" class="form-control" name="qtte"
-                                                                    th:placeholder="${document.qtte}">
-                                                            </div>
-                                                            <div class="mb-4">
-                                                                <label for="documentDescription"
-                                                                    class="form-label">Prix</label>
-                                                                <input type="text" class="form-control" name="prix"
-                                                                    th:placeholder="${document.prix}">
-                                                            </div>
-                                                            <div class="d-flex gap-3 mb-4">
-                                                                <button type="submit"
-                                                                    class="btn btn-primary flex-grow-1">Modifier</button>
-                                                            </div>
-                                                        </form>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-
-
                                         <button class="btn btn-action" title="Supprimer"
-                                            th:attr="data-bs-target='#deleteDocumentModal-' + ${document.id}"
+                                            th:attr="data-bs-target='#deletePretModal-' + ${pret.id}"
                                             data-bs-toggle="modal">
                                             <span class="material-icons">delete</span>
                                         </button>
+                                    </div>
 
-                                        <!-- Model de delete -->
-                                        <div class="modal fade" th:id="'deleteDocumentModal-' + ${document.id}"
-                                            tabindex="-1">
-                                            <div class="modal-dialog modal-dialog-centered">
-                                                <div class="modal-content">
-                                                    <div class="modal-header">
-                                                        <h5 class="modal-title text-center">Suppression</h5>
-                                                        <button type="button" class="btn-close"
-                                                            data-bs-dismiss="modal"></button>
-                                                    </div>
-                                                    <div class="modal-body">
-                                                        <p class="">Etes vous sur de supprimer <span
-                                                                th:text="${document.titre}"></span></p>
-
-                                                    </div>
-                                                    <div class="modal-footer">
-                                                        <form method="post"
-                                                            th:action="@{/GestionDocument/deleteDocument}">
-                                                            <!--input type="hidden" name="_csrf"
-                                                                th:value="${_csrf.token}" /-->
-                                                            <input type="hidden" name="id" th:value="${document.id}" />
-                                                            <div class="d-flex mb-4 justify-content-end gap-3">
-                                                                <button type="submit"
-                                                                    class="btn btn-danger">Supprimer</button>
-                                                            </div>
-                                                        </form>
-                                                    </div>
-
+                                    <!-- Modify Modal -->
+                                    <div class="modal fade" th:id="'modifyPretModal-' + ${pret.id}" tabindex="-1">
+                                        <div class="modal-dialog modal-dialog-centered">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <h5 class="modal-title">Modifier le prêt</h5>
+                                                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                                                </div>
+                                                <div class="modal-body">
+                                                    <form action="/GestionPret/modifyPret" method="post">
+                                                        <input type="hidden" name="id" th:value="${pret.id}">
+                                                        <div class="mb-4">
+                                                            <label for="documentId" class="form-label">Document</label>
+                                                            <select class="form-control" name="documentId" required>
+                                                                <option th:each="doc : ${documents}" 
+                                                                        th:value="${doc.id}" 
+                                                                        th:text="${doc.titre}"
+                                                                        th:selected="${doc.id == pret.document.id}">
+                                                                </option>
+                                                            </select>
+                                                        </div>
+                                                        <div class="mb-4">
+                                                            <label for="usagerId" class="form-label">Usager</label>
+                                                            <select class="form-control" name="usagerId" required>
+                                                                <option th:each="user : ${usagers}" 
+                                                                        th:value="${user.id}" 
+                                                                        th:text="${user.nom}"
+                                                                        th:selected="${user.id == pret.usager.id}">
+                                                                </option>
+                                                            </select>
+                                                        </div>
+                                                        <div class="mb-4">
+                                                            <label for="dateEmprunt" class="form-label">Date d'emprunt</label>
+                                                            <input type="date" class="form-control" name="dateEmprunt" 
+                                                                   th:value="${pret.dateEmprunt}" required>
+                                                        </div>
+                                                        <div class="mb-4">
+                                                            <label for="dateRetour" class="form-label">Date de retour</label>
+                                                            <input type="date" class="form-control" name="dateRetour"
+                                                                   th:value="${pret.dateRetour}" required>
+                                                        </div>
+                                                        <button type="submit" class="btn btn-primary w-100">Modifier</button>
+                                                    </form>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!-- Delete Modal -->
+                                    <div class="modal fade" th:id="'deletePretModal-' + ${pret.id}" tabindex="-1">
+                                        <div class="modal-dialog modal-dialog-centered">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <h5 class="modal-title">Confirmation de suppression</h5>
+                                                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                                                </div>
+                                                <div class="modal-body">
+                                                    <p>Êtes-vous sûr de vouloir supprimer ce prêt ?</p>
+                                                    <form action="/GestionPret/deletePret" method="post">
+                                                        <input type="hidden" name="id" th:value="${pret.id}">
+                                                        <button type="submit" class="btn btn-danger w-100">Supprimer</button>
+                                                    </form>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
                                 </td>
                             </tr>
-
                         </tbody>
                     </table>
                 </div>
-
             </div>
         </div>
     </div>
-
-
     <script type="text/javascript" src="/js/main.js"></script>
     <script type="text/javascript" src="/js/script.js"></script>
-
     <!--  BOOTSTRAP  -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
@@ -299,5 +225,4 @@
         integrity="sha384-0pUGZvbkm6XF6gxjEnlmuGrJXVbNuzT9qBBavbLwCsOGabYfZo0T0to5eqruptLy"
         crossorigin="anonymous"></script>
 </body>
-
 </html>

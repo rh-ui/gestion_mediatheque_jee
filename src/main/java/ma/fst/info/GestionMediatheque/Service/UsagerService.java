@@ -59,4 +59,5 @@ public class UsagerService {
     public Optional<Usager> getUsagerById(Long id) {
         return usagerRepository.findById(id);
     }
+
 }
