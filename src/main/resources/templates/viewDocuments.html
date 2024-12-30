@@ -32,16 +32,24 @@
             <div class="collapse navbar-collapse" id="navbarCollapse">
                 <ul class="navbar-nav ms-auto">
                     <li class="nav-item">
-                        <a class="nav-link px-3" href="/RoutesEmploye/profileE">Accueil</a>
+                        <a class="nav-link px-3" href="/RoutesEmploye/profile">Accueil</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link px-3" href="/ConsulterDocuments">Documents disponibles</a>
+                        <a class="nav-link px-3" href="/RoutesEmploye/documentsE">Documents</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link px-3" href="/ConsulterPretsU">Vos prêts</a>
+                        <a class="nav-link px-3" href="/RoutesEmploye/gestUsager">Usagers</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link px-3" href="#">Déconnexion</a>
+                        <a class="nav-link px-3" href="/RoutesEmploye/gestPrets">Prêts</a>
+                    </li>
+                    <li class="nav-item">
+                        <form th:action="@{/logout}" method="post">
+                            <button type="submit" class="nav-link px-3"
+                                style="color: #06bbcc; border: none; background: none;">
+                                Déconnexion
+                            </button>
+                        </form>
                     </li>
                 </ul>
             </div>
