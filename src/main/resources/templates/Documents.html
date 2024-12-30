@@ -32,7 +32,7 @@
             <div class="collapse navbar-collapse" id="navbarCollapse">
                 <ul class="navbar-nav ms-auto">
                     <li class="nav-item">
-                        <a class="nav-link px-3" href="/RoutesEmploye/profile">Accueil</a>
+                        <a class="nav-link px-3" href="#">Accueil</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link px-3" href="/RoutesEmploye/documentsE">Documents</a>
@@ -41,7 +41,7 @@
                         <a class="nav-link px-3" href="/RoutesEmploye/gestUsager">Usagers</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link px-3" href="/RoutesEmploye/gestPrets">Prêts</a>
+                        <a class="nav-link px-3" href="#">Prêts</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link px-3" href="#" style="color: #06bbcc;">Déconnexion</a>
@@ -195,11 +195,10 @@
                                                         <form action="/GestionDocument/modifyDocument" method="post"
                                                             th:action="@{/GestionDocument/modifyDocument}">
 
-                                                            <input type="hidden" name="_csrf"
-                                                                th:value="${_csrf.token}" />
+                                                            <!-- <input type="hidden" name="_csrf"
+                                                                th:value="${_csrf.token}" /> -->
 
-                                                            <input type="hidden" name="id"
-                                                                th:value="${document.id}" />
+                                                            <input type="hidden" name="id" th:value="${document.id}" />
 
                                                             <div class="mb-4">
                                                                 <label for="documentTitle"
@@ -236,7 +235,9 @@
                                         </div>
 
 
-                                        <button class="btn btn-action" title="Supprimer" th:attr="data-bs-target='#deleteDocumentModal-' + ${document.id}" data-bs-toggle="modal">
+                                        <button class="btn btn-action" title="Supprimer"
+                                            th:attr="data-bs-target='#deleteDocumentModal-' + ${document.id}"
+                                            data-bs-toggle="modal">
                                             <span class="material-icons">delete</span>
                                         </button>
 
@@ -251,12 +252,15 @@
                                                             data-bs-dismiss="modal"></button>
                                                     </div>
                                                     <div class="modal-body">
-                                                        <p class="">Etes vous sur de supprimer <span th:text="${document.titre}"></span></p>
-                                                        
+                                                        <p class="">Etes vous sur de supprimer <span
+                                                                th:text="${document.titre}"></span></p>
+
                                                     </div>
                                                     <div class="modal-footer">
-                                                        <form method="post" th:action="@{/GestionDocument/deleteDocument}">
-                                                            <input type="hidden" name="_csrf" th:value="${_csrf.token}" />
+                                                        <form method="post"
+                                                            th:action="@{/GestionDocument/deleteDocument}">
+                                                            <!-- <input type="hidden" name="_csrf"
+                                                                th:value="${_csrf.token}" /> -->
                                                             <input type="hidden" name="id" th:value="${document.id}" />
                                                             <div class="d-flex mb-4 justify-content-end gap-3">
                                                                 <button type="submit"
@@ -264,7 +268,7 @@
                                                             </div>
                                                         </form>
                                                     </div>
-                                                    
+
                                                 </div>
                                             </div>
                                         </div>
