@@ -49,27 +49,6 @@ public class PretController {
         pretService.savePret(pret);
         return "redirect:/GestionPret/gestPrets";
     }
-    // @GetMapping("/gestPrets")
-    // public String showPrets(Model model) {
-    //     model.addAttribute("prets", pretService.getAllPrets());
-    //     model.addAttribute("documents", documentService.getAllDocuments());
-    //     model.addAttribute("usagers", usagerService.getAllUsagers());
-    //     return "gestPrets";
-    // }
-    // @GetMapping("/addPret")
-    // @ResponseBody
-    // public Map<String, Object> showAddPretForm() {
-    //     Map<String, Object> model = new HashMap<>();
-    //     model.put("documents", documentService.getAllDocuments());
-    //     model.put("usagers", usagerService.getAllUsagers());
-    //     return model;
-    // }
-        
-    // @PostMapping("/addPret")
-    // public String addPret(@ModelAttribute Prets pret) {
-    //     pretService.savePret(pret);
-    //     return "redirect:/GestionPret/gestPrets";
-    // }
     
     @PostMapping("/modifyPret")
     public String modifyPret(@ModelAttribute Prets pret) {

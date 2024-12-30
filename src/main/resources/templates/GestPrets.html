@@ -148,7 +148,7 @@
                                                     <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                                                 </div>
                                                 <div class="modal-body">
-                                                    <form action="/GestionPret/modifyPret" method="post">
+                                                    <form th:action="@{/GestionPret/modifyPret" method="post">
                                                         <input type="hidden" name="id" th:value="${pret.id}">
                                                         <div class="mb-4">
                                                             <label for="documentId" class="form-label">Document</label>
