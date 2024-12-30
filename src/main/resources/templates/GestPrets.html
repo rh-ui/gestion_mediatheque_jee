@@ -23,40 +23,8 @@
 <body>
     <div class="loading-animation"></div>
 
-    <nav class="navbar navbar-expand-lg navbar-light bg-white sticky-top">
-        <div class="container">
-            <a class="navbar-brand d-flex align-items-center" href="#">
-                <h2 class="mb-0" style="color: #06bbcc; font-weight: 700;">OI Mediatheque</h2>
-            </a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarCollapse">
-                <ul class="navbar-nav ms-auto">
-                    <li class="nav-item">
-                        <a class="nav-link px-3" href="/RoutesEmploye/profile">Accueil</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link px-3" href="/RoutesEmploye/documentsE">Documents</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link px-3" href="/RoutesEmploye/gestUsager">Usagers</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link px-3" href="/RoutesEmploye/gestPrets">Prêts</a>
-                    </li>
-                    <li class="nav-item">
-                        <form th:action="@{/logout}" method="post">
-                            <button type="submit" class="nav-link px-3"
-                                style="color: #06bbcc; border: none; background: none;">
-                                Déconnexion
-                            </button>
-                        </form>
-                    </li>
-                </ul>
-            </div>
-        </div>
-    </nav>
+    <div th:insert="~{fragments/headerEmploye :: headerEmploye}"></div>
+    
     <div class="container py-5">
         <div class="card">
             <div class="card-body p-4">

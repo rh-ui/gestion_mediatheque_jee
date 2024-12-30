@@ -21,47 +21,13 @@
 <body>
     <div class="loading-animation"></div>
 
-    <nav class="navbar navbar-expand-lg navbar-light bg-white sticky-top">
-        <div class="container">
-            <a class="navbar-brand d-flex align-items-center" href="#">
-                <h2 class="mb-0" style="color: #06bbcc; font-weight: 700;">OI Mediatheque</h2>
-            </a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarCollapse">
-                <ul class="navbar-nav ms-auto">
-                    <li class="nav-item">
-                        <a class="nav-link px-3" href="/RoutesEmploye/profile">Accueil</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link px-3" href="/RoutesEmploye/documentsE">Documents</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link px-3" href="/RoutesEmploye/gestUsager">Usagers</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link px-3" href="/RoutesEmploye/gestPrets">Prêts</a>
-                    </li>
-                    <li class="nav-item">
-                        <form th:action="@{/logout}" method="post">
-                            <button type="submit" class="nav-link px-3"
-                                style="color: #06bbcc; border: none; background: none;">
-                                Déconnexion
-                            </button>
-                        </form>
-                    </li>
-                </ul>
-            </div>
-        </div>
-    </nav>
+    <div th:insert="~{fragments/headerUsager :: headerUsager}"></div>
 
     <div class="container py-5">
 
         <div class="card">
             <div class="card-body p-4">
                 <div class="d-flex justify-content-between align-items-center mb-4">
-                    
                     <div class="d-flex gap-3 align-items-center">
                         <div class="search-box">
                             <input id="searchBar" type="text" placeholder="Rechercher..." class="form-control ps-5"
@@ -93,7 +59,6 @@
                         </div>
                     </div>
                 </div>
-
                 <div class="table-responsive">
                     <table class="table align-middle">
                         <thead>
@@ -104,8 +69,8 @@
                                     </div>
                                 </th>
                                 <th>Titre du document</th>
-                                <th class="text-center">Date d'emprunt</th>
-                                <th class="text-center">Actions</th>
+                                <th class="text-center">Quantité</th>
+                                <th class="text-center">Prix</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -127,43 +92,10 @@
                                     </div>
                                 </td>
                                 <td class="text-center">
-                                    <small class="text-muted">Ajouté le 26 Dec, 2024</small>
-                                </td>
-                                <td>
-                                    <div class="d-flex justify-content-center gap-1">
-                                        <button class="btn btn-action" title="Voir">
-                                            <span class="material-icons">visibility</span>
-                                        </button>
-                                    </div>
-                                </td>
-                            </tr>
-                            <tr class="filter-item">
-                                <td>
-                                    <div class="form-check">
-                                        <input type="checkbox" class="form-check-input select-item">
-                                    </div>
-                                </td>
-                                <td>
-                                    <div class="d-flex align-items-center">
-
-                                        <div>
-                                            <div class="fw-500">
-                                                Design Pattern in Java
-                                            </div>
-
-                                        </div>
-                                    </div>
+                                    <small class="text-muted">4000</small>
                                 </td>
                                 <td class="text-center">
-                                    <small class="text-muted">Ajouté le 26 Dec, 2024</small>
-                                </td>
-                                <td>
-                                    <div class="d-flex justify-content-center gap-1">
-                                        <button class="btn btn-action" title="Voir">
-                                            <span class="material-icons">visibility</span>
-                                        </button>
-                                        
-                                    </div>
+                                    <small class="text-muted">40</small>
                                 </td>
                             </tr>
                         </tbody>
@@ -192,7 +124,7 @@
     </div>
 
 
-    
+
     <script type="text/javascript" src="/js/main.js"></script>
     <script type="text/javascript" src="/js/script.js"></script>
 

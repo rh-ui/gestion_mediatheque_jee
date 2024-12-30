@@ -6,6 +6,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.servlet.ModelAndView;
 
 import ma.fst.info.GestionMediatheque.Models.Employe;
 import ma.fst.info.GestionMediatheque.Security.EmployeUserDetails;
@@ -26,8 +27,8 @@ public class EmployeController {
 
 
     @GetMapping("/")
-    public String index(Model model) {
-        return "index";
+    public ModelAndView index(Model model) {
+        return new ModelAndView("redirect:/RoutesEmploye/profile");
     }
 
     @GetMapping("/EspaceEmploye")
@@ -56,16 +57,12 @@ public class EmployeController {
 
     @GetMapping("/profile")
     public String profile(Model model) {
-        // Récupérer l'authentification actuelle
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         EmployeUserDetails employeDetails = (EmployeUserDetails) authentication.getPrincipal();
 
-        // Obtenir l'employé connecté
+       
         Employe employe = employeDetails.getEmploye();
-
-        // Ajouter l'employé au modèle
         model.addAttribute("employeP", employe);
-
-        return "Profile"; // Retourne la page de profil (profile.html)
+        return "Profile";
     }
 }
