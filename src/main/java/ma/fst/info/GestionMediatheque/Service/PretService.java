@@ -1,40 +1,35 @@
 package ma.fst.info.GestionMediatheque.Service;
 
+import ma.fst.info.GestionMediatheque.Models.*;
+import ma.fst.info.GestionMediatheque.Repository.PretRepository;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-
-import ma.fst.info.GestionMediatheque.Repository.PretRepository;
-import ma.fst.info.GestionMediatheque.Models.Prets;
-import lombok.NoArgsConstructor;
-
-@NoArgsConstructor
 @Service
+@Transactional
 public class PretService {
+    private final PretRepository pretRepository;
 
-    @Autowired
-    private PretRepository pretRepository;
-
-    public void addPret(Prets pret) {
-        pretRepository.save(pret);
+    public PretService(PretRepository pretRepository) {
+        this.pretRepository = pretRepository;
     }
 
-    public void updatePret(Prets pret) {
-        pretRepository.save(pret);
+    public Prets addPret(Prets pret) {
+        return pretRepository.save(pret);
+    }
+
+    public Prets savePret(Prets pret) {
+        return pretRepository.save(pret);
+    }
+
+    public List<Prets> getAllPrets() {
+        return pretRepository.findAll();
     }
 
     public Prets getPretById(Long id) {
-        return pretRepository.findById(id).get();
-    }
-
-    public List<Prets> getPretsRetard() {
-        // return pretRepository.getPretsEnRetard();
-        return null;
-    }
-
-    public List<Prets> displayPret() {
-        return pretRepository.findAll();
+        return pretRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Prêt non trouvé"));
     }
 
     public void deletePret(Long id) {

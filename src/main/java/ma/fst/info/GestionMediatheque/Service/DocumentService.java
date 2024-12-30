@@ -59,5 +59,6 @@ public class DocumentService {
         Document document = documentRepository.findById(id).orElseThrow(() -> new RuntimeException("Document not found with id: " + id));
         documentRepository.delete(document);
     }
+  
 
 }

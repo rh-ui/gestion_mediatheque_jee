@@ -46,4 +46,5 @@ public class DocumentController {
         return new ModelAndView("redirect:/RoutesEmploye/documentsE");
 
     }
+    
 }

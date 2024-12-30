@@ -60,7 +60,6 @@ public class EmployeService {
     }
 
     public void returnDocument(Long pretId) {
-
         // il reste le test de l'existence du pret
 
         Prets pret = pretService.getPretById(pretId);

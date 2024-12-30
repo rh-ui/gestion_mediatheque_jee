@@ -1,14 +1,15 @@
 package ma.fst.info.GestionMediatheque.Models;
 
+import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 import java.util.List;
 
-import jakarta.persistence.*;
-import lombok.*;
-
-@Data
-@AllArgsConstructor
-@NoArgsConstructor
 @Entity
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
 public class Employe {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

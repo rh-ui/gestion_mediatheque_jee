@@ -13,11 +13,16 @@ import ma.fst.info.GestionMediatheque.Security.EmployeUserDetails;
 import ma.fst.info.GestionMediatheque.Service.DocumentService;
 import ma.fst.info.GestionMediatheque.Service.UsagerService;
 import org.springframework.security.core.Authentication;
+import ma.fst.info.GestionMediatheque.Models.Prets;
+import ma.fst.info.GestionMediatheque.Service.*;
 
 
 @RequestMapping("/RoutesEmploye")
 @Controller
 public class EmployeController {
+    
+    @Autowired
+    private PretService pretService;
     
     @Autowired
     DocumentService documentService;
@@ -52,6 +57,9 @@ public class EmployeController {
 
     @GetMapping("/gestPrets")
     public String gestPrets(Model model) {
+        model.addAttribute("prets", pretService.getAllPrets());
+        model.addAttribute("documents", documentService.getAllDocuments());
+        model.addAttribute("usagers", usagerService.getAllUsagers());
         return "GestPrets";
     }
 
