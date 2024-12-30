@@ -21,9 +21,6 @@
 <body>
     <div class="loading-animation"></div>
 
-<<<<<<< HEAD
-    <div th:insert="~{fragments/headerEmploye :: headerEmploye}"></div>
-=======
     <nav class="navbar navbar-expand-lg navbar-light bg-white sticky-top">
         <div class="container">
             <a class="navbar-brand d-flex align-items-center" href="#">
@@ -35,30 +32,24 @@
             <div class="collapse navbar-collapse" id="navbarCollapse">
                 <ul class="navbar-nav ms-auto">
                     <li class="nav-item">
-                        <a class="nav-link px-3" th:href="@{/RoutesEmploye/profile}">Accueil</a>
+                        <a class="nav-link px-3" href="#">Accueil</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link px-3" th:href="@{/RoutesEmploye/documentsE}">Documents</a>
+                        <a class="nav-link px-3" href="/RoutesEmploye/documentsE">Documents</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link px-3" th:href="@{/RoutesEmploye/gestUsager}">Usagers</a>
+                        <a class="nav-link px-3" href="/RoutesEmploye/gestUsager">Usagers</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link px-3" th:href="@{/RoutesEmploye/gestPrets}">Prêts</a>
+                        <a class="nav-link px-3" href="#">Prêts</a>
                     </li>
                     <li class="nav-item">
-                        <form th:action="@{/logout}" method="post" style="margin: 0; padding: 0;">
-                            <button type="submit" class="nav-link px-3" 
-                                    style="color: #06bbcc; border: none; background: none; cursor: pointer; width: 100%;">
-                                Déconnexion
-                            </button>
-                        </form>
+                        <a class="nav-link px-3" href="#" style="color: #06bbcc;">Déconnexion</a>
                     </li>
                 </ul>
             </div>
         </div>
     </nav>
->>>>>>> c64ae3285aa03cef963fa8d90dd316ae2b8044da
 
     <div class="container py-5">
 
@@ -266,15 +257,10 @@
 
                                                     </div>
                                                     <div class="modal-footer">
-<<<<<<< HEAD
                                                         <form method="post"
                                                             th:action="@{/GestionDocument/deleteDocument}">
                                                             <!-- <input type="hidden" name="_csrf"
                                                                 th:value="${_csrf.token}" /> -->
-=======
-                                                        <form method="post" th:action="@{/GestionDocument/deleteDocument}">
-                                                            <!-- <input type="hidden" name="_csrf" th:value="${_csrf.token}" /> -->
->>>>>>> c64ae3285aa03cef963fa8d90dd316ae2b8044da
                                                             <input type="hidden" name="id" th:value="${document.id}" />
                                                             <div class="d-flex mb-4 justify-content-end gap-3">
                                                                 <button type="submit"
