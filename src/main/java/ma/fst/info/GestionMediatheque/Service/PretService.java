@@ -28,11 +28,14 @@ public class PretService {
     }
 
     public Prets getPretById(Long id) {
-        return pretRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Prêt non trouvé"));
+        return pretRepository.findById(id).orElseThrow(() -> new RuntimeException("Prêt non trouvé : "+id));
     }
 
     public void deletePret(Long id) {
         pretRepository.deleteById(id);
+    }
+
+    public List<Prets> getPretByUsagerId(Long id) {
+        return pretRepository.findByUsagerId(id);
     }
 }

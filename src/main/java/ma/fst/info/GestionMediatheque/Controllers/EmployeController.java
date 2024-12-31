@@ -57,9 +57,12 @@ public class EmployeController {
 
     @GetMapping("/gestPrets")
     public String gestPrets(Model model) {
+        
         model.addAttribute("prets", pretService.getAllPrets());
         model.addAttribute("documents", documentService.getAllDocuments());
         model.addAttribute("usagers", usagerService.getAllUsagers());
+
+        
         return "GestPrets";
     }
 

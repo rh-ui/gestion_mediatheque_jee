@@ -23,7 +23,7 @@ public class LoginController {
     private PasswordEncoder passwordEncoder;
 
     @GetMapping("/login")
-    public String login(@RequestParam(value = "logout", required = false) String logout, 
+    public String login(@RequestParam(required = false) String logout, 
                        Model model) {
         if (logout != null) {
             model.addAttribute("message", "Vous avez été déconnecté avec succès.");

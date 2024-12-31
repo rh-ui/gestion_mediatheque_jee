@@ -71,13 +71,12 @@
                                     </div>
                                 </th>
                                 <th>Titre du document</th>
-                                <th class="text-center">Quantité</th>
                                 <th class="text-center">Prix</th>
+                                <th class="text-center">Quantité</th>
                             </tr>
                         </thead>
                         <tbody>
-                            
-                            <tr class="filter-item">
+                            <tr class="filter-item" th:each="document : ${documents}">
                                 <td>
                                     <div class="form-check">
                                         <input type="checkbox" class="form-check-input select-item">
@@ -85,25 +84,24 @@
                                 </td>
                                 <td>
                                     <div class="d-flex align-items-center">
-
                                         <div>
-                                            <div class="fw-500">
-                                                Design Pattern in Java
-                                            </div>
-
+                                            <div class="fw-500" th:text="${document.titre}">Titre du document</div>
                                         </div>
                                     </div>
                                 </td>
                                 <td class="text-center">
-                                    <small class="text-muted">200</small>
+                                    <small class="text-muted" th:text="${document.prix}">Prix</small>
                                 </td>
                                 <td class="text-center">
-                                    <small class="text-muted">20</small>
+                                    <small class="text-muted" th:text="${document.qtte}">Quantité</small>
                                 </td>
+                                
                             </tr>
+
                         </tbody>
                     </table>
                 </div>
+
 
                 <nav aria-label="Page navigation" class="d-flex justify-content-center mt-4">
                     <ul class="pagination" id="pagination">

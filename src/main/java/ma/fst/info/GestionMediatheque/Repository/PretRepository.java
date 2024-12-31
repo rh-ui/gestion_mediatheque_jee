@@ -10,7 +10,8 @@ import ma.fst.info.GestionMediatheque.Models.Prets;
 
 @Repository
 public interface PretRepository extends JpaRepository<Prets, Long> {
-
+    
+    List<Prets> findByUsagerId(Long usagerId);
     // @Query("SELECT p FROM prets p WHERE p.date_retour < CURRENT_DATE") // hna ghadi n3ayet les prets li en retard (st3mlna requete personalisé jpa & data spring)
     // List<Prets> getPretsEnRetard();
 }

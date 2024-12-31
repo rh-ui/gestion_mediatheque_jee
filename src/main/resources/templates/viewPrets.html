@@ -74,7 +74,7 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <tr class="filter-item">
+                            <tr class="filter-item" th:each="pret : ${prets}">
                                 <td>
                                     <div class="form-check">
                                         <input type="checkbox" class="form-check-input select-item">
@@ -82,21 +82,18 @@
                                 </td>
                                 <td>
                                     <div class="d-flex align-items-center">
-
                                         <div>
-                                            <div class="fw-500">
-                                                Design Pattern in Java
-                                            </div>
-
+                                            <div class="fw-500" th:text="${pret.document.titre}">Titre du document</div>
                                         </div>
                                     </div>
                                 </td>
                                 <td class="text-center">
-                                    <small class="text-muted">4000</small>
+                                    <small class="text-muted" th:text="${pret.document.prix}">Prix</small>
                                 </td>
                                 <td class="text-center">
-                                    <small class="text-muted">40</small>
+                                    <small class="text-muted" th:text="${pret.document.qtte}">Quantité</small>
                                 </td>
+
                             </tr>
                         </tbody>
                     </table>

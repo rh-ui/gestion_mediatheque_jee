@@ -29,10 +29,11 @@ import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
 
 
 @RequestMapping("/GestionUsager")
-@Controller
+@RestController
 public class UsagerController {
 
     @Autowired
