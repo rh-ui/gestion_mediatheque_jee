@@ -3,25 +3,37 @@ package ma.fst.info.GestionMediatheque.Security;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.stereotype.Service;
 
 import ma.fst.info.GestionMediatheque.Models.Employe;
+import ma.fst.info.GestionMediatheque.Repository.EmployeRepository;
 
 import java.util.Collection;
 import java.util.Collections;
 
+
 public class EmployeUserDetails implements UserDetails {
 
-    // @Autowired
-    private final Employe employe;
+    private  Employe employe;
+  
+    private EmployeRepository employeRepository;
+    
+    private Long employeId; 
 
     public EmployeUserDetails(Employe employe) {
         this.employe = employe;
+        this.employeId = employe.getId();
     }
 
     public Employe getEmploye() {
-        return employe;
+        // Récupérer l'employé à jour depuis la base de données
+        if (employeRepository != null) {
+            return employeRepository.findById(employeId)
+                .orElse(this.employe);
+        }
+        return this.employe;
     }
-
+    
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         // Si vous utilisez des rôles, vous pouvez les retourner ici

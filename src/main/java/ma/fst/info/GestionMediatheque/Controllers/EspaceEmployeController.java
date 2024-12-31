@@ -16,7 +16,7 @@ import org.springframework.security.core.Authentication;
 
 @RequestMapping("/RoutesEmploye")
 @Controller
-public class EmployeController {
+public class EspaceEmployeController {
     
     @Autowired
     DocumentService documentService;
@@ -68,4 +68,6 @@ public class EmployeController {
 
         return "Profile"; // Retourne la page de profil (profile.html)
     }
+
+    
 }

@@ -75,8 +75,8 @@
                                     <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                                 </div>
                                 <div class="modal-body">
-                                    <form action="/GestionDocument/addDocument" method="post"
-                                        th:action="@{/GestionDocument/addDocument}">
+                                    <form action="/GestionDocument/addDocument" method="post">
+                                        <!-- th:action="@{/GestionDocument/addDocument}"> -->
 
                                         <!-- <input type="hidden" name="_csrf" th:value="${_csrf.token}" /> -->
 
@@ -197,8 +197,7 @@
                                                             data-bs-dismiss="modal"></button>
                                                     </div>
                                                     <div class="modal-body">
-                                                        <form action="/GestionDocument/modifyDocument" method="post"
-                                                            th:action="@{/GestionDocument/modifyDocument}">
+                                                        <form action="/GestionDocument/modifyDocument" method="post">
 
                                                             <!-- <input type="hidden" name="_csrf"
                                                                 th:value="${_csrf.token}" /> -->

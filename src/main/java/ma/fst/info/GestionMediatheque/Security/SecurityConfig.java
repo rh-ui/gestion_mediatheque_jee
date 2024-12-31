@@ -3,18 +3,24 @@ package ma.fst.info.GestionMediatheque.Security;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.NoOpPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.ApplicationContext;
+
 
 @Configuration
 public class SecurityConfig {
-    private final EmployeUserDetailsService employeUserDetailsService;
 
-    public SecurityConfig(EmployeUserDetailsService employeUserDetailsService) {
-        this.employeUserDetailsService = employeUserDetailsService;
-    }
+    @Autowired
+    private EmployeUserDetailsService employeUserDetailsService;
+
+    @Autowired
+    private ApplicationContext applicationContext;
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
@@ -23,6 +29,7 @@ public class SecurityConfig {
             .authorizeHttpRequests(auth -> auth
                 .requestMatchers("/css/**", "/js/**", "/images/**").permitAll()
                 .requestMatchers("/login", "/register").permitAll()
+                .requestMatchers("/GestionEmployee/**").authenticated()
                 .anyRequest().authenticated()
             )
             .formLogin(form -> form
@@ -42,9 +49,20 @@ public class SecurityConfig {
                 .deleteCookies("JSESSIONID")
                 .permitAll()
             )
-            .userDetailsService(employeUserDetailsService);
+            .userDetailsService(userDetailsService());  // Utilisez la nouvelle méthode
 
         return http.build();
+    }
+
+    @Bean
+    public UserDetailsService userDetailsService() {
+        return username -> {
+            UserDetails userDetails = employeUserDetailsService.loadUserByUsername(username);
+            if (userDetails instanceof EmployeUserDetails) {
+                applicationContext.getAutowireCapableBeanFactory().autowireBean(userDetails);
+            }
+            return userDetails;
+        };
     }
 
     @Bean

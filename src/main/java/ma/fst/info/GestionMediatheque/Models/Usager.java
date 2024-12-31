@@ -15,6 +15,8 @@ public class Usager {
     private String nom;
     private String prenom;
     private String email;
+    private String password;
+    private String telephone;
     
     @OneToMany(mappedBy = "usager")
     private List<Prets> prets;

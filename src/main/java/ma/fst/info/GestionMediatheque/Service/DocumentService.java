@@ -38,7 +38,7 @@ public class DocumentService {
         // return documentRepository.getQtte(documentId);
         return 0L;
     }
-
+ 
     public void updateDocument(Long id, String titre, String auteur, Long qtte, Long prix) {
 
         Document document = documentRepository.findById(id).orElseThrow(() -> new RuntimeException("Document not found with id: " + id));

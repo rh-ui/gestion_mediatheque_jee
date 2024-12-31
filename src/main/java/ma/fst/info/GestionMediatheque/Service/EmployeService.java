@@ -7,6 +7,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.ModelAttribute;
 
 import lombok.*;
 import ma.fst.info.GestionMediatheque.Models.Document;
@@ -14,8 +15,9 @@ import ma.fst.info.GestionMediatheque.Models.Employe;
 import ma.fst.info.GestionMediatheque.Models.Prets;
 import ma.fst.info.GestionMediatheque.Repository.EmployeRepository;
 
-@NoArgsConstructor
+
 @Service
+@RequiredArgsConstructor
 public class EmployeService {
 
     @Autowired
@@ -80,20 +82,46 @@ public class EmployeService {
     private Employe getEmploye(Long employeId) {
         return employeRepository.findById(employeId).get();
     }
-
-    public void updateEmploye(Long id, String nom, String prenom, String email, String password,
+    
+    public Employe updateEmploye(Long id, String nom, String prenom, String email,
                                      Long telephone, String poste) {
 
         Employe employe = employeRepository.findById(id).orElseThrow(() -> new RuntimeException("Employe not found with id: " + id));
-
+  
         employe.setNom(nom);
         employe.setPrenom(prenom);
         employe.setEmail(email);
         employe.setTelephone(telephone);
         employe.setPoste(poste);
-        employe.setPassword(passwordEncoder.encode(employe.getPassword()));
+        // employe.setPassword(passwordEncoder.encode(password));
+        
+
         employeRepository.save(employe);
+
+        return employe;
     }
+
+    public boolean addEmploye(@ModelAttribute Employe employe) {
+
+        try {
+            if (employeRepository.findByEmail(employe.getEmail()).isPresent()) {
+                return false;
+            }
+    
+            employe.setPassword(passwordEncoder.encode(employe.getPassword()));
+            
+            employeRepository.save(employe);
+
+            return true;
+            
+        } catch (Exception e) {
+            return true;
+        }
+
+    }
+    
+
+    
 
         
 
