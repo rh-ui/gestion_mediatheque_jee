@@ -14,18 +14,33 @@ import ma.fst.info.GestionMediatheque.Service.DocumentService;
 import ma.fst.info.GestionMediatheque.Service.EmployeService;
 
 @Controller
-public class LoginController {
+public class RegisterController {
 
     @Autowired
     private EmployeService employeService;
+    
 
-    @GetMapping("/login")
-    public String login(@RequestParam(value = "logout", required = false) String logout, 
-                       Model model) {
-        if (logout != null) {
-            model.addAttribute("message", "Vous avez été déconnecté avec succès.");
-        }
-        return "Login";
+    @GetMapping("/register")
+    public String showRegistrationForm() {
+        return "Register";
     }
+
+    @PostMapping("/register")
+    public String registerEmploye(@ModelAttribute Employe employe, Model model) {
+        try {
+            if (!employeService.addEmploye(employe)) {
+                model.addAttribute("error", "Cet email est déjà utilisé");
+                return "Register";
+            }
+            
+            model.addAttribute("success", "Inscription réussie ! Vous pouvez maintenant vous connecter.");
+            return "Login";
+            
+        } catch (Exception e) {
+            model.addAttribute("error", "Une erreur est survenue lors de l'inscription");
+            return "Register";
+        }
+    }
+
      
 }

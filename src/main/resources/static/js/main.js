@@ -1,4 +1,4 @@
-document.getElementById('select-all').addEventListener('change', function() {
+document.getElementById('select-all').addEventListener('change', function () {
     const checkboxes = document.querySelectorAll('.select-item');
     checkboxes.forEach(checkbox => {
         checkbox.checked = this.checked;
@@ -6,8 +6,8 @@ document.getElementById('select-all').addEventListener('change', function() {
 });
 
 function filtrer() {
-    const filtre = document.getElementById('searchBar'); 
-    const allRows = Array.from(document.querySelectorAll('.filter-item')); 
+    const filtre = document.getElementById('searchBar');
+    const allRows = Array.from(document.querySelectorAll('.filter-item'));
     const rowsPerPage = 6;
 
     filtre.addEventListener('input', function () {
@@ -37,28 +37,98 @@ function displayFilteredResults(filteredRows, rowsPerPage) {
 
 function setupFilteredPagination(filteredRows, rowsPerPage, totalPages) {
     const paginationContainer = document.getElementById('pagination');
-    paginationContainer.innerHTML = '';
+    paginationContainer.innerHTML = ''; // Réinitialiser la pagination
 
+    // Génération des boutons de pagination
     for (let i = 1; i <= totalPages; i++) {
-        const button = document.createElement('button');
-        button.textContent = i;
-        button.className = 'page-item active';
-        button.addEventListener('click', () => {
+        const pageItem = document.createElement('li'); // Créer un élément <li>
+        pageItem.className = `page-item ${i === 1 ? 'active' : ''}`; // Ajouter une classe active pour la première page
+
+        const pageLink = document.createElement('a'); // Créer un élément <a>
+        pageLink.className = 'page-link'; // Classe pour le style
+        pageLink.href = '#'; // Empêcher la navigation
+        pageLink.textContent = i; // Numéro de page
+
+        // Ajout de l'événement de clic
+        pageLink.addEventListener('click', () => {
+            // Mise à jour des lignes visibles
             const start = (i - 1) * rowsPerPage;
             const end = start + rowsPerPage;
+
             document.querySelectorAll('.filter-item').forEach((row) => {
                 row.classList.add('hidden');
             });
-            
+
             filteredRows.slice(start, end).forEach((row) => {
                 row.classList.remove('hidden');
             });
+
+            // Mise à jour des classes actives dans la pagination
+            document.querySelectorAll('.page-item').forEach((item) => item.classList.remove('active'));
+            pageItem.classList.add('active');
         });
-        paginationContainer.appendChild(button);
+
+        pageItem.appendChild(pageLink); // Ajouter le lien dans l'élément <li>
+        paginationContainer.appendChild(pageItem); // Ajouter l'élément <li> dans la pagination
     }
 }
+
+
+function setupDynamicPagination(dataArray, rowsPerPage) {
+    const paginationContainer = document.getElementById('pagination');
+    paginationContainer.innerHTML = ''; // Réinitialiser la pagination
+
+    const totalPages = Math.ceil(dataArray.length / rowsPerPage); // Calculer le nombre total de pages
+
+    // Générer les boutons de pagination
+    for (let i = 1; i <= totalPages; i++) {
+        const pageItem = document.createElement('li');
+        pageItem.className = `page-item ${i === 1 ? 'active' : ''}`; // dar la premiere page active
+
+        const pageLink = document.createElement('a'); 
+        pageLink.className = 'page-link';
+        pageLink.href = '#';
+        pageLink.textContent = i;
+
+        pageLink.addEventListener('click', () => {
+            const start = (i - 1) * rowsPerPage;
+            const end = start + rowsPerPage;
+
+            document.querySelectorAll('.filter-item').forEach((row) => {
+                row.classList.add('hidden');
+            });
+
+            dataArray.slice(start, end).forEach((row) => {
+                row.classList.remove('hidden');
+            });
+
+            // ghay7iyed active l precedente o y y3tiha leli 7na watyin 3liha
+            document.querySelectorAll('.page-item').forEach((item) => item.classList.remove('active'));
+            pageItem.classList.add('active');
+        });
+
+        pageItem.appendChild(pageLink); // ghadi y ajouter le lien à l'élément <li> bach ymchi l section lakhra dyal la liste
+        paginationContainer.appendChild(pageItem); // Ajouter l'élément <li> dans la pagination
+    }
+
+    // hna ghadi y afficher awel elements dyal la page
+    const start = 0;
+    const end = rowsPerPage;
+    dataArray.slice(start, end).forEach((row) => {
+        row.classList.remove('hidden');
+    });
+}
+
+
 
 // Activer la fonction de recherche dès que la page est chargée
 document.addEventListener('DOMContentLoaded', () => {
     filtrer();
+});
+
+// dar eventListener bach y3iyet la méthode mn mor ma DOM ytcharja kamel (DOM ???)
+document.addEventListener('DOMContentLoaded', () => {
+    const rows = Array.from(document.querySelectorAll('.filter-item')); 
+    const rowsPerPage = 5;
+    setupDynamicPagination(rows, rowsPerPage);
 });

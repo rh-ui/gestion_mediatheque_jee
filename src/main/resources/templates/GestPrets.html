@@ -34,25 +34,29 @@
             <div class="collapse navbar-collapse" id="navbarCollapse">
                 <ul class="navbar-nav ms-auto">
                     <li class="nav-item">
-                        <a class="nav-link px-3" href="#">Accueil</a>
+                        <a class="nav-link px-3" href="/RoutesEmploye/profile">Accueil</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link px-3" href="/documentsE">Documents</a>
+                        <a class="nav-link px-3" href="/RoutesEmploye/documentsE">Documents</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link px-3" href="#">Usagers</a>
+                        <a class="nav-link px-3" href="/RoutesEmploye/gestUsager">Usagers</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link px-3" href="#">Prêts</a>
+                        <a class="nav-link px-3" href="/RoutesEmploye/gestPrets">Prêts</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link px-3" href="#" style="color: #06bbcc;">Déconnexion</a>
+                        <form th:action="@{/logout}" method="post">
+                            <button type="submit" class="nav-link px-3"
+                                style="color: #06bbcc; border: none; background: none;">
+                                Déconnexion
+                            </button>
+                        </form>
                     </li>
                 </ul>
             </div>
         </div>
     </nav>
-
     <div class="container py-5">
         <div class="card">
             <div class="card-body p-4">
